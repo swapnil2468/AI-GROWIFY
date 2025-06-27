@@ -121,7 +121,6 @@ def log_user_logout(user_id):
 
 # ─── 5) Login UI ─────────────────────────────────────────────────────────────
 def do_login():
-    st.markdown('<div class="login-card">', unsafe_allow_html=True)
     st.markdown("<h2>Company AI Portal</h2>", unsafe_allow_html=True)
 
     with st.form("login_form"):
