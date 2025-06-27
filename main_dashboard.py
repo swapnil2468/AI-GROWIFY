@@ -6,6 +6,7 @@ import pyrebase
 import firebase_admin
 from firebase_admin import credentials, firestore
 import requests
+import json
 import time
 
 # ─── Page Config ───────────────────────────────
@@ -37,8 +38,16 @@ except Exception as e:
     st.stop()
 
 if not firebase_admin._apps:
-    cred = credentials.Certificate(r"C:\Users\91987\Desktop\AI GROWIFY\growify-ai-d8b93-firebase-adminsdk-fbsvc-c1c940d0d9.json")  # Replace with your service account JSON path
-    firebase_admin.initialize_app(cred)
+    service_account_json = os.getenv("FIREBASE_ADMIN_JSON")
+    if not service_account_json:
+        st.error("❌ FIREBASE_ADMIN_JSON environment variable is not set!")
+        st.stop()
+    try:
+        cred = credentials.Certificate(json.loads(service_account_json))
+        firebase_admin.initialize_app(cred)
+    except Exception as e:
+        st.error(f"❌ Failed to initialize Firebase Admin SDK: {e}")
+        st.stop()
 
 db = firestore.client()
 # ─── Firebase Helpers ──────────────────────────
