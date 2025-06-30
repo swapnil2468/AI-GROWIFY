@@ -13,6 +13,34 @@ from dotenv import load_dotenv  # ✅ Added for .env support
 def main():
     # ---------- CONFIG ----------
     st.title("PROMPTLY - The AI Blog Idea Generator")
+    with st.expander("ℹ️ How to Use This Tool"):
+        st.markdown("""
+        **Welcome to PROMPTLY - The AI Blog Idea Generator!**  
+        This tool is designed for content strategists and marketing teams to instantly brainstorm **fresh, engaging blog ideas** tailored to your brand.
+
+        **📌 How it works:**
+        - Select your **brand** from the list. All saved details (description, website, example blogs) will load automatically.
+        - Optionally add **extra notes** about campaigns, seasonal themes, or target audiences.
+        - Click **"Generate Blog Ideas"** to instantly get **5 unique, high-quality blog titles** designed to match premium fashion/lifestyle content standards.
+
+        **⚡ What the tool does:**
+        - Crawls the brand’s website to extract **internal product/category pages**.
+        - Analyzes site content to extract **relevant, non-branded keywords**.
+        - Uses advanced AI to craft **original, non-repetitive blog titles** suitable for high-end audiences.
+        - Ensures topics encourage **natural internal linking** (e.g., "explore our latest collection") without sounding forced or generic.
+
+        **✅ Features:**
+        - Always generates **different and creative** ideas on each run.
+        - Designed for **high-end fashion, lifestyle, and luxury brands**.
+        - Keeps suggestions **non-branded** to expand SEO reach and customer interest.
+
+        **💡 Tips:**
+        - Add extra notes to fine-tune ideas for campaigns or seasons.
+        - Review the extracted keywords for insight into your site's current content themes.
+        - Use the generated titles as inspiration for blogs, ad copies, or social posts.
+
+        Ready to brainstorm like a pro? 🚀
+        """)
 
     # ---------- LOAD BRAND DATA ----------
     data_path = os.path.join(os.path.dirname(__file__), "brand_data.json")

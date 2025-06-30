@@ -183,6 +183,38 @@ def crawl_entire_site(start_url):
 # --- Streamlit App ---
 def main():
     st.title("Full-Site SEO Auditor")
+    with st.expander("ℹ️ How to Use This Tool"):
+        st.markdown("""
+        **Welcome to the Full-Site SEO Auditor!**  
+        This tool crawls your entire website and analyzes all internal pages for common SEO issues.  
+
+        **📌 How it works:**
+        - Enter your website's **homepage URL** in the input box (e.g., `https://example.com`).
+        - Click **"Start Full Site Audit"**.
+        - The tool will visit all internal links, render the pages, and perform a detailed SEO analysis.
+
+        **⚡ Features of the Tool:**
+        - Finds missing or duplicate **title tags** and **meta descriptions**.
+        - Checks for **H1** structure issues.
+        - Identifies **images missing alt attributes**.
+        - Detects **empty anchor text links**.
+        - Measures **text-to-HTML ratio** (important for content-heavy pages).
+        - Checks for **broken outbound links**.
+        - Verifies if **JSON-LD schema** is present.
+
+        **✅ After Crawling:**
+        - View the **Raw SEO Report** with page-by-page JSON output.
+        - See a **Full SEO Issue Metrics** summary table.
+        - Generate an **AI-powered SEO Summary** for executive reporting.
+        - **Download** the AI summary as a PDF with all key insights.
+
+        **💡 Tips:**
+        - Make sure your site is publicly accessible (no login walls or blocks).
+        - For best results, ensure links are well-structured (relative or absolute).
+        - Large sites may take longer to crawl – please be patient!
+
+        Enjoy optimizing! 🚀
+        """)
 
     start_url = st.text_input("Enter the homepage URL (e.g., https://example.com)")
     st.caption("This will crawl all internal pages and analyze them.")

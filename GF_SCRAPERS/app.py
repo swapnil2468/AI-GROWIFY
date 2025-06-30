@@ -96,6 +96,49 @@ def main():
     # ------------------ Streamlit UI ------------------
    
     st.title("PitchKit: Designer Lead Extractor")
+    with st.expander("ℹ️ How to Use This Tool"):
+        st.markdown("""
+        **Welcome to PitchKit: Designer Lead Extractor!**  
+        This tool is designed for marketing teams, agencies, and brand managers who want to **quickly research and collect leads** for designer brands and boutiques.
+
+        **📌 What this tool can do:**
+        - **Scrape contact details** (emails, phones, social links) from designer/boutique websites.
+        - **Look up Instagram handles** to get follower counts, bio, verification, and business status.
+        - **Calculate Instagram engagement rates** for any public profile.
+        - **Search designer brand websites** and **detect their CMS** (Shopify, WooCommerce, etc.).
+
+        **✅ How to use each section:**
+
+        **1️⃣ Contact Scraper**
+        - Paste one or more website URLs (one per line).
+        - Click **"Scrape Contact Info"**.
+        - Get a table of emails, phones, social links with a CSV download.
+
+        **2️⃣ Instagram Handle Lookup**
+        - Enter Instagram handles (comma-separated).
+        - Click **"Fetch Instagram Info"**.
+        - See bios, followers, business status, etc. in a table.
+
+        **3️⃣ Engagement Rate Calculator**
+        - Enter one Instagram handle.
+        - Click **"Calculate Engagement Rate"**.
+        - View the estimated engagement % from a live web calculator.
+
+        **4️⃣ Designer Search + CMS Detection**
+        - Enter designer brand names (one per line).
+        - Click **"Search Designers"**.
+        - Tool will find top official website links for each brand.
+        - Select a link to see its **CMS platform** (e.g., Shopify).
+        - Click **"Scrape Contact"** to get emails, phones, social links from that site.
+
+        **💡 Tips:**
+        - Use official brand sites for best contact accuracy.
+        - For Instagram lookups, ensure profiles are public.
+        - Engagement rate calculator uses a live web scraper — be patient!
+        - CMS detection helps you identify e-commerce platforms for partnership or competitor research.
+
+        Ready to grow your lead pipeline? 🚀
+        """)
 
     # Input website URLs
     input_urls = st.text_area("Enter Website URLs (one per line)", height=200)

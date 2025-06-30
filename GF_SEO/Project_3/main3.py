@@ -186,6 +186,36 @@ def convert_to_pdf(meta_title, meta_description, blog_content):
 # ----- STREAMLIT APP -----
 def main():
     st.title("\U0001F4C8 Optimize Your Existing Blog for SEO")
+    with st.expander("ℹ️ How to Use This Tool"):
+        st.markdown("""
+        **Welcome to the AI Blog SEO Optimizer!**  
+        This tool helps you fully transform your existing blog into an SEO-optimized, human-friendly, client-ready draft.
+
+        **📌 How it works:**
+        - Upload your existing blog file (**.txt** or **.md**).
+        - Choose your desired **tone** (Polished Professional, Conversational Expert, or Editorial Journalistic).
+        - The AI will analyze and rewrite your content with advanced SEO, readability, and engagement guidelines.
+
+        **⚡ What the tool does:**
+        - Keeps **Flesch Reading Score** between 60–75 for best audience reach.
+        - Adds an emotional **Introduction** and a clear **Conclusion** with a call-to-action.
+        - Applies natural keyword usage, clear structure, headings, and formatting.
+        - Uses bullet points, numbered lists, and tables for scannability.
+        - Links brand/product mentions to relevant URLs automatically.
+        - Provides SEO meta elements (Title, Description, Keywords, Slug suggestion).
+
+        **✅ Features:**
+        - View the fully optimized blog in the app.
+        - Get readability analysis, link checks, and intro/conclusion validation.
+        - Download your optimized blog as **.txt** or **PDF**.
+
+        **💡 Tips:**
+        - Use clear, topic-focused input content to get the best results.
+        - Review the output for your brand's voice and any final tweaks.
+        - Ideal for agency teams, content strategists, and SEO professionals.
+
+        Ready to give your blog a professional SEO upgrade? 🚀
+        """)
 
     tone = st.selectbox("\U0001F3A7 Choose Tone Style", ["Polished Professional", "Conversational Expert", "Editorial Journalistic"])
     uploaded_file = st.file_uploader("\U0001F4C2 Upload Blog (.txt or .md)", type=["txt", "md"])

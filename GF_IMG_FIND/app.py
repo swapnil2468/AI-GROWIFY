@@ -96,7 +96,37 @@ def extract_images_from_zip(zip_file):
 # Main Application
 def main():
     st.markdown('<h1 class="main-title">PixelMatch</h1>', unsafe_allow_html=True)
-    
+    with st.expander("ℹ️ How to Use This Tool"):
+        st.markdown("""
+        **Welcome to PixelMatch!**  
+        This AI-powered tool helps you find **visually similar images** in your reference library, perfect for cataloging, e-commerce, and creative teams.
+
+        **📌 How it works:**
+        - Upload your **Query Image** (the image you want to find similar matches for).
+        - Upload your **Reference Images** (your internal database/library) either as:
+        - Multiple individual images
+        - A single ZIP folder containing multiple images
+        - Optionally, preview your reference images before matching.
+
+        **⚡ Matching Process:**
+        - The AI model extracts deep features from your images.
+        - It compares your query image with all reference images.
+        - It shows **matches with 80%+ similarity**, ranked by similarity score.
+
+        **✅ Features:**
+        - Fully supports batch processing via ZIP upload.
+        - Displays clear **similarity percentages** for all matches.
+        - Lets you set a **custom base name** for matched images.
+        - Packages all matched images into a **downloadable ZIP** with new naming.
+
+        **💡 Tips:**
+        - Use high-resolution images for best results.
+        - Make sure your reference library has clear, well-lit images.
+        - Try different query images if you get no matches.
+
+        Ready to find your perfect matches? 🚀
+        """)
+
     col1, col2 = st.columns([1, 1])
     
     # Query Image Section

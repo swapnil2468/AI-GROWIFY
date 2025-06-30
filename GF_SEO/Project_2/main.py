@@ -107,7 +107,35 @@ def parse_response_to_dataframe(response_text):
 
 def main():
     st.title("SEO Keyword Explorer")
+    
+    with st.expander("ℹ️ How to Use This Tool"):
+        st.markdown("""
+        **Welcome to the SEO Keyword Explorer!**  
+        Use this AI-powered tool to discover high-quality, non-branded keyword ideas for SEO campaigns.
 
+        **📌 How it works:**
+        - Enter your **Seed Keyword** (e.g., *designer lehenga*).
+        - Select your **Target Location** (e.g., India, UAE, USA).
+        - Click **"Generate Keywords"** to get 100 AI-suggested, **non-branded** keywords.
+
+        **⚡ What you'll get:**
+        - Keywords with realistic **Search Volume**, **CPC (USD)**, **Paid Difficulty**, **SEO Difficulty**, and **Search Intent** (Informational, Commercial, Transactional).
+        - An **Opportunity Score** calculated to help prioritize the best keywords.
+        - Results sorted to highlight the most valuable opportunities for your strategy.
+
+        **✅ Features:**
+        - 100% Non-branded suggestions (ideal for generic and long-tail targeting).
+        - Support for multiple locations (India, UAE, UK, USA, Australia, Singapore, or custom input).
+        - **Download** results as a CSV for easy integration into your SEO workflow.
+
+        **💡 Tips:**
+        - Focus on high Opportunity Score keywords with strong volume and manageable difficulty.
+        - Use generated keywords in your content strategy, Google Ads campaigns, or SEO briefs.
+        - Experiment with different seed terms to expand your coverage of relevant topics.
+
+        Enjoy optimizing! 🚀
+        """)
+    
     col1, col2 = st.columns([2, 1])
     with col1:
         seed_keyword = st.text_input("🔍 Seed Keyword", placeholder="e.g., designer lehenga")
