@@ -80,12 +80,20 @@ if not firebase_admin._apps:
     if not service_account_json:
         st.error("❌ FIREBASE_ADMIN_JSON environment variable is not set!")
         st.stop()
+
     try:
-        cred = credentials.Certificate(json.loads(service_account_json))
+        # Load JSON
+        parsed = json.loads(service_account_json)
+
+        # FIX: Replace literal \\n with real \n in private_key
+        parsed["private_key"] = parsed["private_key"].replace("\\n", "\n")
+
+        cred = credentials.Certificate(parsed)
         firebase_admin.initialize_app(cred)
     except Exception as e:
         st.error(f"❌ Failed to initialize Firebase Admin SDK: {e}")
         st.stop()
+
 
 db = firestore.client()
 
