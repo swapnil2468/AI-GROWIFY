@@ -15,10 +15,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 import zipfile
 import io
 
-
-# Custom CSS for beautiful UI
-
-
 # Load Deep Model
 @st.cache_resource
 def load_model():
@@ -95,7 +91,8 @@ def extract_images_from_zip(zip_file):
 
 # Main Application
 def main():
-    st.markdown('<h1 class="main-title">PixelMatch</h1>', unsafe_allow_html=True)
+    st.title("PixelMatch")
+    
     with st.expander("ℹ️ How to Use This Tool"):
         st.markdown("""
         **Welcome to PixelMatch!**  
@@ -127,65 +124,45 @@ def main():
         Ready to find your perfect matches? 🚀
         """)
 
-    col1, col2 = st.columns([1, 1])
-    
     # Query Image Section
-    with col1:
-        st.markdown("""
-        <div class="upload-section">
-            <h3 style="color: white; text-align: center;">🎯 Query Image</h3>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        uploaded_query = st.file_uploader("Upload the image to find matches for", type=['jpg', 'jpeg', 'png'])
-        
-        # Always show query image if uploaded
-        if uploaded_query:
-            st.markdown("""
-            <div class="query-preview">
-                <h4 style="color: white;">Query Image Preview</h4>
-            </div>
-            """, unsafe_allow_html=True)
-            st.image(uploaded_query, use_column_width=True, caption="Your Query Image")
+    st.subheader("🎯 Query Image")
+    uploaded_query = st.file_uploader("Upload the image to find matches for", type=['jpg', 'jpeg', 'png'])
     
-    # Reference Images Section
-    with col2:
-        st.markdown("""
-        <div class="upload-section">
-            <h3 style="color: white; text-align: center;">📚 Reference Images</h3>
-        </div>
-        """, unsafe_allow_html=True)
-        
-        upload_method = st.radio("Choose upload method:", ["Multiple Images", "ZIP Folder"])
-        
-        if upload_method == "Multiple Images":
-            uploaded_refs = st.file_uploader("Upload reference images", 
-                                            type=['jpg', 'jpeg', 'png'], 
-                                            accept_multiple_files=True)
-            ref_files_dict = {}
-        else:
-            uploaded_zip = st.file_uploader("Upload ZIP folder", type=['zip'])
-            if uploaded_zip:
-                uploaded_refs, ref_files_dict = extract_images_from_zip(uploaded_zip)
-                if uploaded_refs:
-                    st.success(f"✅ Extracted {len(uploaded_refs)} images")
-                else:
-                    uploaded_refs = []
+    # Show query image preview
+    if uploaded_query:
+        st.markdown("**Query Image Preview**")
+        st.image(uploaded_query, use_column_width=True, caption="Your Query Image")
+    
+    # Reference Images Section (now below query image)
+    st.subheader("📚 Reference Images")
+    upload_method = st.radio("Choose upload method:", ["Multiple Images", "ZIP Folder"], horizontal=True)
+    
+    if upload_method == "Multiple Images":
+        uploaded_refs = st.file_uploader("Upload reference images", 
+                                        type=['jpg', 'jpeg', 'png'], 
+                                        accept_multiple_files=True)
+        ref_files_dict = {}
+    else:
+        uploaded_zip = st.file_uploader("Upload ZIP folder", type=['zip'])
+        if uploaded_zip:
+            uploaded_refs, ref_files_dict = extract_images_from_zip(uploaded_zip)
+            if uploaded_refs:
+                st.success(f"✅ Extracted {len(uploaded_refs)} images")
             else:
                 uploaded_refs = []
-                ref_files_dict = {}
-        
-        # Preview reference images button
-        if uploaded_refs:
-            st.markdown('<div class="preview-button">', unsafe_allow_html=True)
-            if st.button(f"👁️ Preview Reference Images ({len(uploaded_refs)} files)"):
-                st.session_state.show_refs = not st.session_state.get('show_refs', False)
-            st.markdown('</div>', unsafe_allow_html=True)
+        else:
+            uploaded_refs = []
+            ref_files_dict = {}
+    
+    # Preview reference images button
+    if 'uploaded_refs' in locals() and uploaded_refs:
+        if st.button(f"👁️ Preview Reference Images ({len(uploaded_refs)} files)", use_container_width=True):
+            st.session_state.show_refs = not st.session_state.get('show_refs', False)
     
     # Show reference images preview if button clicked
     if uploaded_refs and st.session_state.get('show_refs', False):
         st.markdown("---")
-        st.markdown('<p style="color: white; text-align: center; font-size: 1.2rem;">📖 Reference Images Preview</p>', unsafe_allow_html=True)
+        st.markdown("**📖 Reference Images Preview**")
         
         # Show in grid
         cols_per_row = 4
@@ -205,11 +182,7 @@ def main():
         st.markdown("---")
         
         # Custom naming section
-        st.markdown("""
-        <div class="upload-section">
-            <h3 style="color: white; text-align: center;">🏷️ Set Download Name</h3>
-        </div>
-        """, unsafe_allow_html=True)
+        st.subheader("🏷️ Set Download Name")
         
         custom_name = st.text_input("Enter base name for matched images:", 
                                    value="", 
@@ -278,7 +251,7 @@ def main():
             st.markdown("---")
             
             if matched_images:
-                st.markdown(f'<p class="results-header">🎯 Found {len(matched_images)} High-Quality Matches (≥80% similarity)</p>', unsafe_allow_html=True)
+                st.subheader(f"🎯 Found {len(matched_images)} High-Quality Matches (≥80% similarity)")
                 
                 # Show matches in a beautiful grid
                 cols_per_row = 3
@@ -288,13 +261,9 @@ def main():
                         if i + j < len(matched_images):
                             file_name, score = matched_images[i + j]
                             with cols[j]:
-                                st.markdown(f"""
-                                <div class="match-card">
-                                    <h4 style="color: white;">Match {i+j+1}</h4>
-                                    <p style="color: #4CAF50; font-weight: bold;">Similarity: {score:.1%}</p>
-                                    <p style="color: white; font-size: 0.9rem;">Will be: {custom_name}_{i+j+1}</p>
-                                </div>
-                                """, unsafe_allow_html=True)
+                                st.markdown(f"**Match {i+j+1}**")
+                                st.markdown(f"Similarity: {score:.1%}")
+                                st.markdown(f"Will be: {custom_name}_{i+j+1}")
                                 
                                 # Find and show the reference image
                                 for ref_img in uploaded_refs:
@@ -304,12 +273,8 @@ def main():
                                         break
                 
                 # Download Section
-                st.markdown("""
-                <div class="download-section">
-                    <h3 style="color: white;">📦 Download Your Matches</h3>
-                    <p style="color: white;">All matched images will be renamed and packaged for you!</p>
-                </div>
-                """, unsafe_allow_html=True)
+                st.subheader("📦 Download Your Matches")
+                st.markdown("All matched images will be renamed and packaged for you!")
                 
                 # Create and offer download
                 zip_data = create_zip_from_matches(matched_images, ref_files_dict, custom_name)
@@ -327,21 +292,11 @@ def main():
                 st.success(f"✅ Ready to download {len(matched_images)} high-quality matches!")
                 
             else:
-                st.markdown('<p class="results-header">❌ No matches found above 80% similarity</p>', unsafe_allow_html=True)
+                st.subheader("❌ No matches found above 80% similarity")
                 st.info("Try uploading different reference images or a different query image.")
     
     elif uploaded_query or uploaded_refs:
         st.info("📋 Upload both query and reference images to start matching")
-    
-    else:
-        st.markdown("""
-        <div style="text-align: center; color: white; padding: 3rem;">
-            <h3>🚀 Welcome to AI Image Matching!</h3>
-            <p style="font-size: 1.1rem; opacity: 0.8;">
-                Upload a query image and reference images to find matches with 80%+ similarity using deep learning.
-            </p>
-        </div>
-        """, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     if model is None:
