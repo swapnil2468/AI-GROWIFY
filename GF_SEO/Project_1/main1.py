@@ -125,7 +125,7 @@ def compute_sitewide_metrics(seo_data):
 
 
 # --- Crawler Function ---
-def crawl_entire_site(start_url):
+def crawl_entire_site(start_url, max_pages=None):
     visited = set()
     queue = [start_url]
     all_reports = []
@@ -139,6 +139,10 @@ def crawl_entire_site(start_url):
     content_hashes_seen = set()
 
     while queue:
+        # NEW: Stop if max pages reached
+        if max_pages and len(visited) >= max_pages:
+            break
+
         current_index = total_to_crawl - len(queue)
         current_url = queue.pop(0)
         normalized_current = normalize_url(current_url)
@@ -219,6 +223,9 @@ def main():
     start_url = st.text_input("Enter the homepage URL (e.g., https://example.com)")
     st.caption("This will crawl all internal pages and analyze them.")
 
+    # ✅ NEW: Limit checkbox
+    limit_pages = st.checkbox("✅ Limit crawl to 200 pages max?")
+
     if st.button("Start Full Site Audit"):
         if not start_url:
             st.warning("Please enter a valid URL.")
@@ -227,7 +234,8 @@ def main():
             start_url = "https://" + start_url.strip()
 
         with st.spinner("Crawling and analyzing site..."):
-            full_report = crawl_entire_site(start_url)
+            max_pages = 200 if limit_pages else None
+            full_report = crawl_entire_site(start_url, max_pages=max_pages)
             st.session_state["seo_data"] = full_report
             st.session_state["ai_summary"] = None
             st.session_state["ai_summary_time"] = None
@@ -273,4 +281,4 @@ def main():
             )
 
 if __name__ == "__main__":
-    main()  
+    main()
